@@ -15,29 +15,26 @@
       indicator-color="rgba(255,255,255,.3)"
       indicator-active-color="rgba(255,255,255)"
     >
-      <block v-for="item in 3" :key="item">
+      <block v-for="item in bennerList" :key="item.goods_id">
         <swiper-item>
-          <image mode="aspectFill" src="/static/images/test.png"></image>
+          <image mode="aspectFill" :src="item.image_src"></image>
         </swiper-item>
       </block>
     </swiper>
 
     <!-- 分类 -->
     <div class="category">
-      <img src="/static/images/category.png" alt="" />
-      <img src="/static/images/second.png" alt="" />
-      <img src="/static/images/supermarket.png" alt="" />
-      <img src="/static/images/baby.png" alt="" />
+      <img v-for="item in categoryList" :key="item.name" :src="item.image_src" alt="" />
     </div>
 
-    <div class="floorBox">
-      <img src="https://api.zbztb.cn/pyg/pic_floor01_title.png" alt="" />
+    <div class="floorBox" v-for="(item,index) in floorList" :key="index">
+      <img :src="item.floor_title.image_src" alt="" />
       <div class="bottomBox">
-        <img class="fristPic" src="https://api.zbztb.cn/pyg/pic_floor01_1@2x.png" alt="">
+        <img class="fristPic" :src="item.product_list[0].image_src" alt="">
         <div class="right">
           <img
-            v-for="item in 4" :key="item"
-            src="https://api.zbztb.cn/pyg/pic_floor01_5@2x.png"
+            v-for="(pic,index2) in item.product_list" :key="index2" v-if="index2!==0"
+            :src="pic.image_src"
             alt=""
           />
         </div>
@@ -50,11 +47,44 @@
 export default {
   data () {
     return {
-
+      bennerList: [],
+      categoryList: [],
+      floorList: []
     }
   },
   created () {
-
+    this.getBenner()
+    this.getCategory()
+    this.getFloorData()
+  },
+  methods: {
+    // 轮播图
+    getBenner () {
+      this.$axios({
+        url: '/api/public/v1/home/swiperdata'
+      }).then(res => {
+      // console.log(res)
+        this.bennerList = res.data.message
+      })
+    },
+    // 获取分类
+    getCategory () {
+      this.$axios({
+        url: '/api/public/v1/home/catitems'
+      }).then(res => {
+        // console.log(res)
+        this.categoryList = res.data.message
+      })
+    },
+    // 获取楼层区数据
+    getFloorData () {
+      this.$axios({
+        url: '/api/public/v1/home/floordata'
+      }).then(res => {
+        // console.log(res)
+        this.floorList = res.data.message
+      })
+    }
   }
 
 }
@@ -105,13 +135,14 @@ swiper {
 }
 
 .floorBox {
+  margin-bottom: 40rpx;
   > img {
     width: 100%;
     height: 88rpx;
     }
     .bottomBox{
       display: flex;
-      padding: 20rpx 17rpx 0;
+      padding: 10rpx 17rpx 0;
       .fristPic{
         width: 232rpx;
         height: 386rpx;
