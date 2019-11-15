@@ -1,10 +1,20 @@
 <template>
-  <div>分类</div>
+  <div>
+    <searchBar/>
+  </div>
 </template>
 
 <script>
+import searchBar from '@/components/searchBar.vue'
 export default {
+  components: {
+    searchBar
+  },
+  data () {
+    return {
 
+    }
+  }
 }
 </script>
 

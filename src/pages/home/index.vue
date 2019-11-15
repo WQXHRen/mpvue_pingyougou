@@ -1,12 +1,6 @@
 <template>
   <div>
-    <header>
-      <div class="searchBar">
-        <icon type="search" size="20"> </icon>
-        <span class="search">搜索</span>
-      </div>
-    </header>
-
+    <searchBar/>
     <!-- 轮播图 -->
     <swiper
       indicator-dots
@@ -47,7 +41,11 @@
 </template>
 
 <script>
+import searchBar from '@/components/searchBar.vue'
 export default {
+  components: {
+    searchBar
+  },
   data () {
     return {
       bennerList: [],
@@ -66,7 +64,7 @@ export default {
       this.$axios({
         url: '/api/public/v1/home/swiperdata'
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         this.bennerList = res
       })
     },
@@ -96,27 +94,6 @@ export default {
 img {
   vertical-align: top;
 }
-header {
-  height: 100rpx;
-  background-color: #eb4450;
-  padding: 0 16rpx;
-  display: flex;
-  align-items: center;
-  .searchBar {
-    width: 100%;
-    height: 60rpx;
-    border-radius: 8rpx;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #bbb;
-    .search {
-      margin-left: 16rpx;
-    }
-  }
-}
-
 swiper {
   image {
     width: 100%;
