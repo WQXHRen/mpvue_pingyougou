@@ -2,7 +2,7 @@
   <div>
     <header>
       <icon type="search" size="16"> </icon>
-      <input type="text" v-model="key" />
+      <input type="text" v-model="key" confirm-type="search"  @confirm="searchHandle"/>
     </header>
 
     <div class="filter">
@@ -18,7 +18,6 @@
 
     <ul class="goodsList">
       <li class="goodsItem" v-for="item in goodsList" :key="item.goods_id">
-        <!-- <div class="img"></div> -->
         <img class="img" :src="item.goods_small_logo" alt="图片到火星去了">
         <div class="right">
           <p class="goodsName">{{item.goods_name}}</p>
@@ -26,36 +25,74 @@
         </div>
       </li>
     </ul>
+    <p class="bottomText" v-show="isLastPage">暂无更多数据...</p>
   </div>
 </template>
 
 <script>
+const PAGESIZE = 10
 export default {
   data () {
     return {
       key: '',
       filterText: ['综合', '销量', '价格'],
       activeIndex: 0,
-      goodsList: []
+      goodsList: [],
+      isLastPage: false
     }
+  },
+  // 下拉加载
+  onReachBottom () {
+    if (this.isLastPage) {
+      return
+    }
+    this.pageNum++
+    this.getGoodsList()
+  },
+  // 上拉刷新
+  onPullDownRefresh () {
+    this.isLastPage = false
+    this.reLoad()
   },
   onLoad (option) {
     // console.log(option)
+    this.isRequest = false
     this.key = option.key
+    this.pageNum = 1
+    this.goodsList = []
     this.getGoodsList()
   },
   methods: {
+    searchHandle (e) {
+      this.key = e.target.value
+      this.reLoad()
+    },
+    // 重新加载
+    reLoad () {
+      this.pageNum = 1
+      this.goodsList = []
+      this.getGoodsList()
+    },
     getGoodsList () {
+      if (this.isQuest || this.isLastPage) {
+        return
+      }
+      this.isRequest = true
       this.$request({
         url: '/api/public/v1/goods/search',
         data: {
           query: this.key,
-          pagesize: 10,
-          pagenum: 1
+          pagesize: PAGESIZE,
+          pagenum: this.pageNum
         }
       }).then(res => {
         // console.log(res)
         this.goodsList = [...this.goodsList, ...res.goods]
+
+        if (this.goodsList.length === res.total) {
+          this.isLastPage = true
+        }
+        this.isQuest = false
       })
     }
   }
@@ -134,5 +171,11 @@ header {
       }
     }
   }
+}
+.bottomText{
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: rgb(136, 136, 136);
 }
 </style>
