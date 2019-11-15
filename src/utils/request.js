@@ -4,8 +4,8 @@ export default function request ({
   noLoading,
   data = {},
   method = 'get',
-  dataType = 'json',
-  header = {'content-type': 'josn'}}) {
+  dataType = 'json'
+}) {
   return new Promise((resolve, reject) => {
     if (!noLoading) {
       wx.showLoading({
@@ -18,7 +18,6 @@ export default function request ({
       data, // 请求的参数",
       method,
       dataType, // 如果设为json，会尝试对返回的数据做一次 JSON.parse
-      header,
       success: res => {
         let { meta, message } = res.data
         if (meta.status === 200) {

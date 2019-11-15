@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/home/main",
+    "pages/goods_list/main",
     "pages/cart/main",
     "pages/category/main",
     "pages/mine/main"
@@ -9,7 +10,6 @@
     "backgroundTextStyle": "light",
     "navigationBarTitleText": "",
     "navigationBarBackgroundColor": "#eb4450",
-    "navigationBarTitleText": "首页",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

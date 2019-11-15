@@ -6,7 +6,7 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 // 将wx.request添加到vue原型
-Vue.prototype.$axios = request
+Vue.prototype.$request = request
 
 const app = new Vue(App)
 app.$mount()

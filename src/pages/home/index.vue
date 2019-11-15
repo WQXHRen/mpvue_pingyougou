@@ -61,7 +61,7 @@ export default {
   methods: {
     // 轮播图
     getBenner () {
-      this.$axios({
+      this.$request({
         url: '/api/public/v1/home/swiperdata'
       }).then(res => {
         // console.log(res)
@@ -70,7 +70,7 @@ export default {
     },
     // 获取分类
     getCategory () {
-      this.$axios({
+      this.$request({
         url: '/api/public/v1/home/catitems'
       }).then(res => {
         // console.log(res)
@@ -79,7 +79,7 @@ export default {
     },
     // 获取楼层区数据
     getFloorData () {
-      this.$axios({
+      this.$request({
         url: '/api/public/v1/home/floordata'
       }).then(res => {
         // console.log(res)
