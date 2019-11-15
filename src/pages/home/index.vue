@@ -24,19 +24,22 @@
 
     <!-- 分类 -->
     <div class="category">
-      <img v-for="item in categoryList" :key="item.name" :src="item.image_src" alt="" />
+      <img
+        v-for="item in categoryList"
+        :key="item.name"
+        :src="item.image_src"
+        alt=""
+      />
     </div>
 
-    <div class="floorBox" v-for="(item,index) in floorList" :key="index">
+    <div class="floorBox" v-for="(item, index) in floorList" :key="index">
       <img :src="item.floor_title.image_src" alt="" />
       <div class="bottomBox">
-        <img class="fristPic" :src="item.product_list[0].image_src" alt="">
+        <img class="fristPic" :src="item.product_list[0].image_src" alt="" />
         <div class="right">
-          <img
-            v-for="(pic,index2) in item.product_list" :key="index2" v-if="index2!==0"
-            :src="pic.image_src"
-            alt=""
-          />
+          <block v-for="(pic, index2) in item.product_list" :key="index2">
+          <img v-if="index2" :src="pic.image_src" alt="" />
+          </block>
         </div>
       </div>
     </div>
@@ -63,8 +66,8 @@ export default {
       this.$axios({
         url: '/api/public/v1/home/swiperdata'
       }).then(res => {
-      // console.log(res)
-        this.bennerList = res.data.message
+        console.log(res)
+        this.bennerList = res
       })
     },
     // 获取分类
@@ -73,7 +76,7 @@ export default {
         url: '/api/public/v1/home/catitems'
       }).then(res => {
         // console.log(res)
-        this.categoryList = res.data.message
+        this.categoryList = res
       })
     },
     // 获取楼层区数据
@@ -82,16 +85,15 @@ export default {
         url: '/api/public/v1/home/floordata'
       }).then(res => {
         // console.log(res)
-        this.floorList = res.data.message
+        this.floorList = res
       })
     }
   }
-
 }
 </script>
 
 <style lang="less">
-img{
+img {
   vertical-align: top;
 }
 header {
@@ -139,24 +141,24 @@ swiper {
   > img {
     width: 100%;
     height: 88rpx;
+  }
+  .bottomBox {
+    display: flex;
+    padding: 10rpx 17rpx 0;
+    .fristPic {
+      width: 232rpx;
+      height: 386rpx;
     }
-    .bottomBox{
+    .right {
       display: flex;
-      padding: 10rpx 17rpx 0;
-      .fristPic{
+      flex: 1;
+      flex-wrap: wrap;
+      > img {
+        margin: 0 0 10rpx 10rpx;
         width: 232rpx;
-        height: 386rpx;
+        height: 188rpx;
       }
-      .right{
-        display: flex;
-        flex: 1;
-        flex-wrap: wrap;
-        >img{
-          margin: 0 0 10rpx 10rpx;
-          width: 232rpx;
-          height: 188rpx;
-        }
-      }
+    }
   }
 }
 </style>
