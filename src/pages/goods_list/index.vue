@@ -18,7 +18,7 @@
     </div>
 
     <ul class="goodsList" :style="{marginTop:isFixed?'220rpx':''}">
-      <li class="goodsItem" v-for="item in goodsList" :key="item.goods_id">
+      <li class="goodsItem" v-for="item in goodsList" :key="item.goods_id" @click="toItem(item.goods_id)">
         <img class="img" :src="item.goods_small_logo" alt="图片到火星去了">
         <div class="right">
           <p class="goodsName">{{item.goods_name}}</p>
@@ -71,6 +71,9 @@ export default {
     this.getGoodsList()
   },
   methods: {
+    toItem (id) {
+      wx.navigateTo({ url: '/pages/item/main?goods_id=' + id })
+    },
     searchHandle (e) {
       this.key = e.target.value
       this.reLoad()

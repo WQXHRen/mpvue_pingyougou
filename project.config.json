@@ -65,9 +65,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "pages/item/main",
 					"pathName": "pages/item/main",
+					"query": "goods_id=701",
 					"scene": null
 				}
 			]
