@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": true,
 		"minified": true,
@@ -25,6 +25,7 @@
 	"projectname": "mpvue_yougou",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"libVersion": "2.9.2",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -61,6 +62,12 @@
 					"name": "搜索列表",
 					"pathName": "pages/goods_list/main",
 					"query": "key=曲面电视",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/item/main",
+					"pathName": "pages/item/main",
 					"scene": null
 				}
 			]

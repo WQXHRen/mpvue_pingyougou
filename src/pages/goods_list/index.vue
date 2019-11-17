@@ -1,10 +1,10 @@
 <template>
   <div>
+    <div class="top" :style="{position:isFixed?'fixed':'static'}">
     <header>
       <icon type="search" size="16"> </icon>
       <input type="text" v-model="key" confirm-type="search"  @confirm="searchHandle"/>
     </header>
-
     <div class="filter">
       <div
         :class="{ active: activeIndex === index }"
@@ -15,8 +15,9 @@
         {{ item }}
       </div>
     </div>
+    </div>
 
-    <ul class="goodsList">
+    <ul class="goodsList" :style="{marginTop:isFixed?'220rpx':''}">
       <li class="goodsItem" v-for="item in goodsList" :key="item.goods_id">
         <img class="img" :src="item.goods_small_logo" alt="图片到火星去了">
         <div class="right">
@@ -38,7 +39,8 @@ export default {
       filterText: ['综合', '销量', '价格'],
       activeIndex: 0,
       goodsList: [],
-      isLastPage: false
+      isLastPage: false,
+      isFixed: false
     }
   },
   // 下拉加载
@@ -49,16 +51,22 @@ export default {
     this.pageNum++
     this.getGoodsList()
   },
+  onPageScroll () {
+    this.isFixed = true
+  },
   // 上拉刷新
   onPullDownRefresh () {
+    this.isFixed = false
     this.isLastPage = false
     this.reLoad()
+    wx.stopPullDownRefresh()
   },
   onLoad (option) {
     // console.log(option)
-    this.isRequest = false
     this.key = option.key
     this.pageNum = 1
+    this.isRequest = false
+    this.isLastPage = false
     this.goodsList = []
     this.getGoodsList()
   },
@@ -71,6 +79,8 @@ export default {
     reLoad () {
       this.pageNum = 1
       this.goodsList = []
+      this.isLastPage = false
+      this.isRequest = false
       this.getGoodsList()
     },
     getGoodsList () {
@@ -100,6 +110,14 @@ export default {
 </script>
 
 <style lang="less">
+
+.top{
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+}
+
 header {
   height: 120rpx;
   width: 100%;
@@ -133,7 +151,7 @@ header {
   }
 }
 .goodsList {
-  
+  // margin-top: 220rpx;
   
   .goodsItem {
     height: 260rpx;
