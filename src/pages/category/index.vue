@@ -1,6 +1,6 @@
 <template>
   <div>
-    <searchBar/>
+    <searchBtn/>
      <!-- 主体部分 -->
     <div class="main" v-if="categories.length">
       <div class="left">
@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import searchBar from '@/components/searchBar'
+import searchBtn from '@/components/searchBtn.vue'
 export default {
   components: {
-    searchBar
+    searchBtn
   },
   data () {
     return {

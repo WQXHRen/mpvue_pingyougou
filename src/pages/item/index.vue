@@ -91,8 +91,8 @@ export default {
     }
   },
   handleContact (e) {
-    console.log(e.detail.path)
-    console.log(e.detail.query)
+    // console.log(e.detail.path)
+    // console.log(e.detail.query)
   },
   // 分享
   onShareAppMessage () {
@@ -102,7 +102,7 @@ export default {
     }
   },
   onLoad (option) {
-    console.log(option.goods_id)
+    // console.log(option.goods_id)
     this.getGoodsDetail(option.goods_id)
   },
   methods: {
@@ -110,7 +110,7 @@ export default {
       this.$request({
         url: '/api/public/v1/goods/detail?goods_id=' + id
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         this.goods = res
       })
     }

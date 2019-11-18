@@ -1,6 +1,6 @@
 <template>
   <div>
-    <searchBar/>
+    <searchBtn/>
     <!-- 轮播图 -->
     <swiper
       indicator-dots
@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import searchBar from '@/components/searchBar.vue'
+import searchBtn from '@/components/searchBtn.vue'
 export default {
   components: {
-    searchBar
+    searchBtn
   },
   data () {
     return {

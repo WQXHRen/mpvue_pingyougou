@@ -1,38 +1,49 @@
 <template>
   <div>
-    <div class="top" :style="{position:isFixed?'fixed':'static'}">
-    <header>
+    <div class="top"
+         :style="{position:isFixed?'fixed':'static'}">
+      <!-- <header>
       <icon type="search" size="16"> </icon>
       <input type="text" v-model="key" confirm-type="search"  @confirm="searchHandle"/>
-    </header>
-    <div class="filter">
-      <div
-        :class="{ active: activeIndex === index }"
-        @click="activeIndex = index"
-        v-for="(item, index) in filterText"
-        :key="item"
-      >
-        {{ item }}
+    </header> -->
+      <searchBar :keyword="key" @confirm ="doSearch"/>
+      <div class="filter">
+        <div :class="{ active: activeIndex === index }"
+             @click="activeIndex = index"
+             v-for="(item, index) in filterText"
+             :key="item">
+          {{ item }}
+        </div>
       </div>
     </div>
-    </div>
 
-    <ul class="goodsList" :style="{marginTop:isFixed?'220rpx':''}">
-      <li class="goodsItem" v-for="item in goodsList" :key="item.goods_id" @click="toItem(item.goods_id)">
-        <img class="img" :src="item.goods_small_logo" alt="图片到火星去了">
+    <ul class="goodsList"
+        :style="{marginTop:isFixed?'220rpx':''}">
+      <li class="goodsItem"
+          v-for="item in goodsList"
+          :key="item.goods_id"
+          @click="toItem(item.goods_id)">
+        <img class="img"
+             :src="item.goods_small_logo"
+             alt="图片到火星去了">
         <div class="right">
           <p class="goodsName">{{item.goods_name}}</p>
           <p class="price">￥<span>{{item.goods_price}}</span>.00</p>
         </div>
       </li>
     </ul>
-    <p class="bottomText" v-show="isLastPage">暂无更多数据...</p>
+    <p class="bottomText"
+       v-show="isLastPage">暂无更多数据...</p>
   </div>
 </template>
 
 <script>
+import searchBar from '@/components/searchBar'
 const PAGESIZE = 10
 export default {
+  components: {
+    searchBar
+  },
   data () {
     return {
       key: '',
@@ -71,6 +82,11 @@ export default {
     this.getGoodsList()
   },
   methods: {
+    // 搜索关键字
+    doSearch (val) {
+      this.key = val
+      this.reLoad()
+    },
     toItem (id) {
       wx.navigateTo({ url: '/pages/item/main?goods_id=' + id })
     },
@@ -113,49 +129,27 @@ export default {
 </script>
 
 <style lang="less">
-
-.top{
+.top {
   width: 100%;
   background-color: #fff;
   position: fixed;
   top: 0;
-}
 
-header {
-  height: 120rpx;
-  width: 100%;
-  background-color: #eeeeee;
-  padding: 30rpx 16rpx;
-  box-sizing: border-box;
-  position: relative;
-  icon {
-    position: absolute;
-    top: 46rpx;
-    left: 46rpx;
-  }
-  input {
-    font-size: 26rpx;
-    border-radius: 8rpx;
-    padding-left: 80rpx;
-    width: 100%;
-    height: 60rpx;
-    background-color: #ffffff;
+  .filter {
+    height: 100rpx;
+    line-height: 100rpx;
+    border-bottom: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: space-around;
+    .active {
+      color: #eb4450;
+    }
   }
 }
 
-.filter {
-  height: 100rpx;
-  line-height: 100rpx;
-  border-bottom: 1px solid #e2e2e2;
-  display: flex;
-  justify-content: space-around;
-  .active {
-    color: #eb4450;
-  }
-}
 .goodsList {
   // margin-top: 220rpx;
-  
+
   .goodsItem {
     height: 260rpx;
     display: flex;
@@ -187,13 +181,13 @@ header {
     .price {
       color: #eb4450;
       font-size: 20rpx;
-      span{
+      span {
         font-size: 34rpx;
       }
     }
   }
 }
-.bottomText{
+.bottomText {
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
