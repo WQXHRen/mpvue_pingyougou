@@ -70,6 +70,13 @@
 					"pathName": "pages/item/main",
 					"query": "goods_id=701",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索列表",
+					"pathName": "pages/search_page/main",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

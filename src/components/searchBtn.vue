@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     toSearchPage () {
-      wx.navigateTo({ url: 'url' })
+      wx.navigateTo({ url: '/pages/search_page/main' })
     }
   }
 }
